@@ -2,18 +2,14 @@
 const express = require("express");
 
 // Establishing the port
-const PORT = process.env.PORT ||8000;
+const PORT = process.env.PORT || 8000;
 const path = require("path");
-
 
 // required mongoose library
 const db = require("./config/mongoose");
 
 // required project list schema
-const ProjectList = require("./models/projectList");
-
-// required project details schema
-const ProjectDetail = require("./models/projectDetails");
+const ProjectList = require("./models/products");
 
 // required express ejs layouts
 const expressLayouts = require("express-ejs-layouts");
@@ -24,9 +20,8 @@ const app = express();
 // use parser
 app.use(express.urlencoded());
 
-// use static files by express
-app.use(express.static("assets"));
 
+app.use(express.json());
 // use express router
 app.use("/", require("./routes/index"));
 

@@ -21,22 +21,22 @@
     <!-- adding header (navbar) partial  -->
     <%- include('_header');%>
 
-    <!-- container for project creation and project list -->
+    <!-- container for product adding and product list -->
     <div class="container">
       <div class="row">
         <div
-          class="h2 pb-2 mb-4 text-success border-bottom border-success fw-bold"
+          class="h2 pb-2 mb-4 text-warning border-bottom border-warning fw-bold"
         >
           <%=headline%>
         </div>
       </div>
       <div class="row">
         <div class="col-2">
-          <div class="h4 pb-2 mb-4 text-success fw-bold">CREATE PROJECT</div>
+          <div class="h4 pb-2 mb-4 text-muted fw-bold">ADD PRODUCT</div>
         </div>
         <div class="col-8">
-          <!-- create project form  -->
-          <form action="/create-project-list" method="post" class="ms-4">
+          <!-- Add Product items and quantity  -->
+          <form action="/products/create/gui" method="post" class="ms-4">
             <div class="form-floating mb-3 col-8">
               <input
                 type="text"
@@ -45,79 +45,77 @@
                 id="floatingInput"
                 placeholder="name@example.com"
               />
-              <label for="floatingInput">Project Name</label>
+              <label for="floatingInput">Product Name</label>
             </div>
             <div class="form-floating mb-3 col-8">
               <input
                 type="text"
-                name="description"
+                name="quantity"
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Password"
               />
-              <label for="floatingPassword">Description</label>
+              <label for="floatingPassword">Enter Quantity</label>
             </div>
-            <div class="form-floating mb-3 col-8">
-              <input
-                type="text"
-                name="author"
-                class="form-control"
-                id="floatingInput"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput">Author</label>
-            </div>
+
             <div>
-              <button type="submit" class="btn btn-success">Add Project</button>
+              <button type="submit" class="btn btn-info text-muted fw-semibold">
+                Add Item
+              </button>
             </div>
           </form>
-          <!-- create project form-End  -->
+          <!-- adding product item-end  -->
         </div>
         <div class="col-2"></div>
       </div>
-      <!-- Render project list -->
-      <div
-        class="h4 pb-2 mb-4 text-success border-bottom border-success fw-bold"
-      >
-        PROJECT LIST
-      </div>
-      <div class="row">
-        <%for(let i of project_list){%>
 
-        <div class="col-2"></div>
-        <div class="col-8">
-          <ul>
-            <a
-              style="text-decoration: none"
-              href="/projectdetails/?id=<%=i.
-            id%>&author=<%=i.author%>&description=<%=i.description%>&name=<%=i.name%>"
+      <!-- adding flex box container -->
+      <div class="d-flex flex-row p-5 flex-wrap justify-content-a">
+        <!-- Render product item list using flex  list -->
+        <%for(let i of product_list){%>
+
+        <!-- product image & details container -->
+        <div class="card m-4 p-2" style="width: 14rem">
+          <img src="https://cdn-icons-png.flaticon.com/128/7126/7126444.png" />
+          <div class="card-body">
+            <h3 class="card-title text-muted"><%=i.name%></h3>
+            <p class="card-text text-muted fw-semibold">
+              <small>Quantity :</small><%=i.quantity%>
+            </p>
+            <!-- updating product quantity form  -->
+            <form
+              form
+              action="/products/update_quantity/gui/<%=i._id%>"
+              method="post"
             >
-              <div class="card border-light shadow p-2 mb-2 bg-white">
-                <div class="card-header text-secondary">
-                  <h5 class="card-title" style="display: inline">
-                    <%=i.name%>
-                  </h5>
-                </div>
-                <div class="card-body text-secondary">
-                  <h6 class="card-title"><%=i.description%></h6>
-                  <p class="card-text">
-                    <small>Author : </small><%=i.author%><small
-                      >&ensp;- <%=i.createdAt%></small
-                    >
-                  </p>
-                </div>
-              </div>
+              <input
+                type="text"
+                name="quantity"
+                placeholder="enter quantity.."
+              />
+              <input
+                type="submit"
+                style="text-align: center; width: 190px"
+                class="btn btn-info mt-2 fw-semibold"
+                value="UPDATE"
+              />
+            </form>
+            <!-- updating product quantity form-End  -->
+
+            <!-- deleting product  -->
+            <a type="button" href="/products/gui/<%=i._id%>">
+              <img
+                src="https://cdn-icons-png.flaticon.com/24/7799/7799917.png"
+              />
             </a>
-          </ul>
+            <!-- deleting product-end  -->
+          </div>
         </div>
-        <div class="col-2 p-2">
-          <a type="button" href="/delete-project/?id=<%=i._id%>">
-            <img src="https://cdn-icons-png.flaticon.com/24/7799/7799917.png" />
-          </a>
-        </div>
+        <!-- product image & details container -->
+
         <%}%>
       </div>
-      <!-- Render project list-End -->
+      <!-- Render product item list-End -->
     </div>
     <i class="fa-thin fa-trash-can"></i>
 
